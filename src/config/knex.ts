@@ -14,7 +14,7 @@ export const knex = require('knex')({
 
 export async function testDatabaseConnection() {
   try {
-    const response = await knex().select(knex.raw('current_date'));
+    const response = await knex.queryBuilder().select(knex.raw('current_date'));
     return response.length > 0;
   } catch (e) {
     console.error(e)
