@@ -1,4 +1,4 @@
-import { host, cleanEnv, str, port } from "envalid";
+import { host, cleanEnv, str, port, num } from "envalid";
 import dotenv from 'dotenv';
 import path from 'path';
 
@@ -22,7 +22,7 @@ export const env = cleanEnv(process.env, {
   }),
 
   DB_HOST: host({
-    default: 'localhost',
+    devDefault: '127.0.0.1',
     desc: 'Database Host'
   }),
   DB_PORT: port({
@@ -37,5 +37,17 @@ export const env = cleanEnv(process.env, {
   }),
   DB_NAME: str({
     desc: 'Database name'
+  }),
+
+  REDIS_HOST: host({
+    desc: 'Redis host'
+  }),
+  REDIS_PORT: port({
+    devDefault: 6379,
+    desc: 'Redis port'
+  }),
+  REDIS_DB: num({
+    default: 0,
+    desc: 'Redis database to use (min=0 max=32)'
   }),
 });
