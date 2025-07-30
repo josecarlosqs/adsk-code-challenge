@@ -12,12 +12,30 @@ export const env = cleanEnv(process.env, {
   }),
 
   HOST: host({
-    devDefault: 'localhost',
+    default: 'localhost',
     desc: 'API Host',
   }),
 
   PORT: port({
     default: 3000,
     desc: 'API Port',
+  }),
+
+  DB_HOST: host({
+    default: 'localhost',
+    desc: 'Database Host'
+  }),
+  DB_PORT: port({
+    default: 5432,
+    desc: 'Database port'
+  }),
+  DB_USER: str({
+    desc: 'Database user'
+  }),
+  DB_PASSWORD: str({
+    desc: 'Database password'
+  }),
+  DB_NAME: str({
+    desc: 'Database name'
   }),
 });
