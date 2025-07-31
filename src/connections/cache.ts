@@ -12,7 +12,7 @@ export async function testCacheConnection() {
     const reply = await redis.ping();
     return reply === 'PONG';
   } catch (e) {
-    console.error(e)
+    console.error(e);
     return false;
   }
 }

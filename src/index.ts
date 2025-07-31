@@ -1,10 +1,17 @@
 import http from 'node:http';
-import express, { Request, Response, NextFunction } from 'express';
-import { env } from './config/env';
+import express, {
+  type NextFunction,
+  type Request,
+  type Response,
+} from 'express';
 import { expressConfig } from './config/app';
+import { env } from './config/env';
+import { closeCacheConnection, testCacheConnection } from './connections/cache';
+import {
+  closeDatabaseConnection,
+  testDatabaseConnection,
+} from './connections/knex';
 import { routes } from './routes';
-import { testCacheConnection, closeCacheConnection } from './connections/cache';
-import { testDatabaseConnection, closeDatabaseConnection } from './connections/knex';
 
 const app = express();
 
@@ -15,21 +22,20 @@ app.use(routes);
 app.use((_req: Request, res: Response, _next) => {
   return res.status(404).json({
     success: false,
-    message: 'Route not found'
+    message: 'Route not found',
   });
 });
-
 
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err.stack);
   res.status(500).json({
     success: false,
-    message: 'Internal Error'
+    message: 'Internal Error',
   });
 });
 
 export const server = http.createServer(app);
-(async function () {
+(async () => {
   const validCacheConection = await testCacheConnection();
   const validDatabaseConection = await testDatabaseConnection();
 
@@ -38,8 +44,7 @@ export const server = http.createServer(app);
       console.log(`📚 BookWorm API exposed @ http://${env.HOST}:${env.PORT}`);
     });
   }
-})()
-
+})();
 
 const shutdown = async () => {
   try {

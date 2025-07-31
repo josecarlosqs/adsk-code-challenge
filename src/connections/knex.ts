@@ -1,5 +1,5 @@
-import { env } from "../config/env";
 import Knex from 'knex';
+import { env } from '../config/env';
 
 export const knex = Knex({
   client: 'pg',
@@ -8,7 +8,7 @@ export const knex = Knex({
     port: env.DB_PORT,
     user: env.DB_USER,
     database: env.DB_NAME,
-    password: env.DB_PASSWORD
+    password: env.DB_PASSWORD,
   },
   pool: { min: 0, max: 7 },
 });
@@ -18,7 +18,7 @@ export async function testDatabaseConnection() {
     const response = await knex.queryBuilder().select(knex.raw('current_date'));
     return response.length > 0;
   } catch (e) {
-    console.error(e)
+    console.error(e);
     return false;
   }
 }

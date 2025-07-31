@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { Book } from '../models/Book';
-import farmhash from 'farmhash'
+import farmhash from 'farmhash';
+import type { Knex } from 'knex';
 import { knex } from '../connections/knex';
-import { Knex } from 'knex';
+import type { Book } from '../models/Book';
 
 interface SearchResponse {
   docs: {
@@ -30,24 +30,26 @@ export class OpenLibraryBooksRepository implements BooksRepository {
   private readonly BASE_URL = 'https://openlibrary.org';
 
   public async search(query: string, page: number): Promise<Book[]> {
-
     try {
-      const response = await axios.get<SearchResponse>(`${this.BASE_URL}/search.json`, {
-        params: {
-          q: `title:"${query}" OR author:"${query}"`,
-          fields: 'title,author_name,key',
-          limit: this.PAGE_SIZE,
-          sort: this.SORTING_FIELD,
-          page: page,
-          lang: 'en'
+      const response = await axios.get<SearchResponse>(
+        `${this.BASE_URL}/search.json`,
+        {
+          params: {
+            q: `title:"${query}" OR author:"${query}"`,
+            fields: 'title,author_name,key',
+            limit: this.PAGE_SIZE,
+            sort: this.SORTING_FIELD,
+            page: page,
+            lang: 'en',
+          },
         },
-      });
+      );
 
       if (!response.data || !response.data.docs) {
         return [];
       }
 
-      const books: Book[] = response.data.docs.map(doc => ({
+      const books: Book[] = response.data.docs.map((doc) => ({
         id: farmhash.fingerprint64signed(doc.key),
         title: doc.title,
         author: doc.author_name?.join(', ') || 'Unknown',
@@ -90,7 +92,15 @@ export class DatabaseBooksRepository implements BooksRepository {
       await knex.transaction(async (trx: Knex.Transaction) => {
         await Promise.allSettled([
           await trx.insert(books).into('books').onConflict('id').ignore(),
-          await trx.insert(books.map((book) => {return {key: key, book_id: book.id}})).into('cached_results').onConflict(['key', 'book_id']).ignore()
+          await trx
+            .insert(
+              books.map((book) => {
+                return { key: key, book_id: book.id };
+              }),
+            )
+            .into('cached_results')
+            .onConflict(['key', 'book_id'])
+            .ignore(),
         ]);
       });
       return true;

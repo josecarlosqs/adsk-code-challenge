@@ -1,6 +1,6 @@
-import { host, cleanEnv, str, port, num } from "envalid";
+import path from 'node:path';
 import dotenv from 'dotenv';
-import path from 'path';
+import { cleanEnv, host, num, port, str } from 'envalid';
 
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
@@ -8,7 +8,7 @@ export const env = cleanEnv(process.env, {
   NODE_ENV: str({
     default: 'development',
     desc: 'API environment',
-    choices: ['development', 'production', 'test']
+    choices: ['development', 'production', 'test'],
   }),
 
   HOST: host({
@@ -23,34 +23,34 @@ export const env = cleanEnv(process.env, {
 
   DB_HOST: host({
     devDefault: '127.0.0.1',
-    desc: 'Database Host'
+    desc: 'Database Host',
   }),
   DB_PORT: port({
     default: 5432,
-    desc: 'Database port'
+    desc: 'Database port',
   }),
   DB_USER: str({
-    desc: 'Database user'
+    desc: 'Database user',
   }),
   DB_PASSWORD: str({
-    desc: 'Database password'
+    desc: 'Database password',
   }),
   DB_NAME: str({
-    desc: 'Database name'
+    desc: 'Database name',
   }),
 
   REDIS_HOST: host({
-    desc: 'Redis host'
+    desc: 'Redis host',
   }),
   REDIS_PORT: port({
     devDefault: 6379,
-    desc: 'Redis port'
+    desc: 'Redis port',
   }),
   REDIS_DB: num({
     default: 0,
-    desc: 'Redis database to use (min=0 max=32)'
+    desc: 'Redis database to use (min=0 max=32)',
   }),
   CACHED_RESULT_DEFAULT_TTL: num({
-    desc: 'Number of seconds the cached result will live'
-  })
+    desc: 'Number of seconds the cached result will live',
+  }),
 });

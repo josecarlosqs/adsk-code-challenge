@@ -1,25 +1,30 @@
-import { env } from "../config/env";
-import { redis } from "../connections/cache";
-import { Book } from "../models/Book";
-import type { BooksRepository, DatabaseBooksRepository } from "../repositories/BooksRepository";
-import farmhash from 'farmhash'
+import farmhash from 'farmhash';
+import { env } from '../config/env';
+import { redis } from '../connections/cache';
+import type { Book } from '../models/Book';
+import type {
+  BooksRepository,
+  DatabaseBooksRepository,
+} from '../repositories/BooksRepository';
 
 export class BooksService {
   private cacheKeyPrefix: string;
   constructor(
     private remoteBooksRepo: BooksRepository,
     private localBooksRepo: DatabaseBooksRepository,
-  ){
+  ) {
     this.cacheKeyPrefix = `BWCK:${this.remoteBooksRepo.PROVIDER_NAME}:${this.remoteBooksRepo.SORTING_FIELD}${this.remoteBooksRepo.SORTING_DIRECTION}${this.remoteBooksRepo.PAGE_SIZE}`;
   }
   public async search(query: string, page: number): Promise<Book[]> {
     const cacheKey = `${this.cacheKeyPrefix}:${page || 1}:${query}`,
-          cachedKeyHash = await redis.get(cacheKey);
+      cachedKeyHash = await redis.get(cacheKey);
 
     let results!: Book[];
 
     if (cachedKeyHash) {
-      results = await this.localBooksRepo.getByCachedResult(BigInt(cachedKeyHash));
+      results = await this.localBooksRepo.getByCachedResult(
+        BigInt(cachedKeyHash),
+      );
       return results;
     }
 
@@ -34,6 +39,5 @@ export class BooksService {
     }
 
     return results;
-
   }
 }

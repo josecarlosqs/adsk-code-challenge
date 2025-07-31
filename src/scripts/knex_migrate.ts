@@ -1,7 +1,6 @@
-import { knex } from "../connections/knex";
+import { knex } from '../connections/knex';
 
-knex.migrate
-  .latest({
-    extension: 'ts',
-    directory: './src/migrations'
-  })
+knex.migrate.latest({
+  extension: 'ts',
+  directory: './src/migrations',
+});
