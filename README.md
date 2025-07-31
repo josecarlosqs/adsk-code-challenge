@@ -1,12 +1,23 @@
 # 📚 BookWorm API
 
+## Requisites
+
+- Docker
+- docker-compose
+
 ## Setup
 
+- Clone repo
+- Populate `.env` with the indicated variables in ``.env.template`
+- run `docker-compose up` to run services
+
+
 ## Exposed Endpoints
+
 - `/search`:
-    - Query parameters:
-        - `q`: Search term. String. Required.
-        - `page`: Result page. Numeric. Optional. Defaults to `1`
+  - Query parameters:
+    - `q`: Search term. String. Required.
+    - `page`: Result page. Numeric. Optional. Defaults to `1`
 
 ## Decisions Made
 
