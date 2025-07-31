@@ -3,8 +3,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import { env } from './config/env';
 import { expressConfig } from './config/app';
 import { routes } from './routes';
-import { testCacheConnection, closeCacheConnection } from './config/cache';
-import { testDatabaseConnection, closeDatabaseConnection } from './config/knex';
+import { testCacheConnection, closeCacheConnection } from './connections/cache';
+import { testDatabaseConnection, closeDatabaseConnection } from './connections/knex';
 
 const app = express();
 
