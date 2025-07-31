@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "db:migrate": "ts-node scripts/knex_migrate.ts"
   },
   "author": "José Carlos Quichiz Santome",
   "license": "UNLICENSED",
