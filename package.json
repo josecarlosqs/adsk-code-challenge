@@ -7,7 +7,7 @@
     "dev": "nodemon src/index.ts",
     "build": "tsc",
     "test": "jest",
-    "db:migrate": "ts-node scripts/knex_migrate.ts"
+    "db:migrate": "ts-node src/scripts/knex_migrate.ts"
   },
   "author": "José Carlos Quichiz Santome",
   "license": "UNLICENSED",

@@ -1,4 +1,4 @@
-import { knex } from "../src/connections/knex";
+import { knex } from "../connections/knex";
 
 knex.migrate
   .latest({

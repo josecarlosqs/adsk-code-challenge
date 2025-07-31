@@ -2,6 +2,7 @@
 
 ## Requisites
 
+- Nodejs@LTS
 - Docker
 - docker-compose
 
@@ -9,8 +10,18 @@
 
 - Clone repo
 - Populate `.env` with the indicated variables in ``.env.template`
-- run `docker-compose up` to run services
+- Run `docker-compose up` to run required services
+- Run `npm i` to install required dependencies
+- Run `npm run db:migrate` to create the database schema
 
+## Development Run
+
+- run `npm run dev`, this will run `nodemon`.
+
+## Production Build & Run
+
+- Run `npm run build`.
+- Run `node dist/index.js`
 
 ## Exposed Endpoints
 
