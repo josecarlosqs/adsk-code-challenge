@@ -50,4 +50,7 @@ export const env = cleanEnv(process.env, {
     default: 0,
     desc: 'Redis database to use (min=0 max=32)'
   }),
+  CACHED_RESULT_DEFAULT_TTL: num({
+    desc: 'Number of seconds the cached result will live'
+  })
 });

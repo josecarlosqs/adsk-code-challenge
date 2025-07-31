@@ -1,7 +1,7 @@
 import Redis from 'ioredis';
-import { env } from './env';
+import { env } from '../config/env';
 
-const redis = new Redis({
+export const redis = new Redis({
   port: env.REDIS_PORT,
   host: env.REDIS_HOST,
   db: env.REDIS_DB,
@@ -20,5 +20,3 @@ export async function testCacheConnection() {
 export async function closeCacheConnection() {
   await redis.quit();
 }
-
-export const cache = () => redis;
