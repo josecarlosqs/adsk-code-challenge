@@ -74,7 +74,7 @@ export class DatabaseBooksRepository implements BooksRepository {
   public async getByCachedResult(key: bigint): Promise<Book[]> {
     try {
       const result = await knex('cached_results as cr')
-        .where('cr.key', key)
+        .where('cr.key', key.toString())
         .join('books as b', 'b.id', '=', 'cr.book_id')
         .select('b.id', 'b.title', 'b.author');
 
