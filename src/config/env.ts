@@ -8,7 +8,7 @@ export const env = cleanEnv(process.env, {
   NODE_ENV: str({
     default: 'development',
     desc: 'API environment',
-    choices: ['development', 'production']
+    choices: ['development', 'production', 'test']
   }),
 
   HOST: host({

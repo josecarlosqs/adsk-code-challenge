@@ -28,7 +28,7 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   });
 });
 
-const server = http.createServer(app);
+export const server = http.createServer(app);
 (async function () {
   const validCacheConection = await testCacheConnection();
   const validDatabaseConection = await testDatabaseConnection();
